@@ -255,37 +255,6 @@ npm start
   createdBy: ObjectId (User),
   createdAt: Date
 }
-```
-
-## Configuration
-
-### Environment Variables (.env)
-
-```env
-# Database
-MONGODB_URI=mongodb://localhost:27017/society-maintenance
-
-# JWT
-JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
-JWT_EXPIRE=30d
-
-# Server
-PORT=5000
-NODE_ENV=development
-
-# Email (Optional)
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASSWORD=your_app_password
-EMAIL_FROM=noreply@societymaintenance.com
-
-# Features
-OVERDUE_THRESHOLD=7
-```
-
-## Features in Detail
-
 ### Complaint Workflow
 1. **Create:** Resident creates complaint with title, description, category, and optional image
 2. **Track:** Complaint appears in resident dashboard with current status
