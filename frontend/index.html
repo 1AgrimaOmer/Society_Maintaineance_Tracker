@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Society Maintenance Tracker - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center">
+  <div class="container max-w-md">
+    <!-- Login/Register Card -->
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
+        <h1 class="text-3xl font-bold text-white">SMT</h1>
+        <p class="text-blue-100 text-sm mt-1">Society Maintenance Tracker</p>
+      </div>
+
+      <!-- Forms -->
+      <div class="p-8">
+        <!-- Login Form -->
+        <div id="loginForm">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome Back</h2>
+
+          <form id="loginFormElement" class="space-y-4">
+            <div>
+              <label class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+              <input
+                type="email"
+                id="loginEmail"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                placeholder="your@email.com"
+              />
+            </div>
+
+            <div>
+              <label class="block text-gray-700 text-sm font-semibold mb-2">Password</label>
+              <input
+                type="password"
+                id="loginPassword"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                placeholder="••••••••"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 rounded-lg hover:shadow-lg transition duration-300"
+            >
+              Login
+            </button>
+          </form>
+
+          <p class="text-center text-gray-600 text-sm mt-4">
+            Don't have an account?
+            <button
+              onclick="toggleForms()"
+              class="text-blue-600 font-semibold hover:text-indigo-600 transition"
+            >
+              Register here
+            </button>
+          </p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" class="hidden">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Account</h2>
+
+          <form id="registerFormElement" class="space-y-4">
+            <div>
+              <label class="block text-gray-700 text-sm font-semibold mb-2">Full Name</label>
+              <input
+                type="text"
+                id="registerName"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                placeholder="John Doe"
+              />
+            </div>
+
+            <div>
+              <label class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+              <input
+                type="email"
+                id="registerEmail"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                placeholder="your@email.com"
+              />
+            </div>
+
+            <div>
+              <label class="block text-gray-700 text-sm font-semibold mb-2">Password</label>
+              <input
+                type="password"
+                id="registerPassword"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                placeholder="••••••••"
+              />
+            </div>
+
+            <div>
+              <label class="block text-gray-700 text-sm font-semibold mb-2">Role</label>
+              <select
+                id="registerRole"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              >
+                <option value="resident">Resident</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 rounded-lg hover:shadow-lg transition duration-300"
+            >
+              Create Account
+            </button>
+          </form>
+
+          <p class="text-center text-gray-600 text-sm mt-4">
+            Already have an account?
+            <button
+              onclick="toggleForms()"
+              class="text-blue-600 font-semibold hover:text-indigo-600 transition"
+            >
+              Login here
+            </button>
+          </p>
+        </div>
+
+        <!-- Demo Accounts Info -->
+        <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <p class="text-xs text-gray-600 font-semibold mb-2">Demo Accounts:</p>
+          <p class="text-xs text-gray-600">
+            <strong>Admin:</strong> admin@demo.com / password123
+          </p>
+          <p class="text-xs text-gray-600">
+            <strong>Resident:</strong> resident@demo.com / password123
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alert Messages -->
+  <div id="alertBox" class="fixed top-4 right-4 max-w-sm z-50"></div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

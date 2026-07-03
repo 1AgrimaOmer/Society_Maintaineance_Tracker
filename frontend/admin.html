@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Society Maintenance Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <h1 class="text-2xl font-bold text-blue-600">SMT</h1>
+        <span class="text-gray-600">Admin Dashboard</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span id="userName" class="text-gray-700 font-semibold"></span>
+        <button
+          onclick="logout()"
+          class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto p-4 md:p-8">
+    <!-- Tabs -->
+    <div class="flex space-x-4 mb-6 border-b border-gray-200 flex-wrap">
+      <button
+        class="tab-btn px-4 py-2 font-semibold border-b-2 border-blue-600 text-blue-600"
+        onclick="switchTab('dashboard')"
+      >
+        Dashboard
+      </button>
+      <button
+        class="tab-btn px-4 py-2 font-semibold border-b-2 border-transparent text-gray-600 hover:text-blue-600 hover:border-blue-300"
+        onclick="switchTab('complaints')"
+      >
+        Complaints
+      </button>
+      <button
+        class="tab-btn px-4 py-2 font-semibold border-b-2 border-transparent text-gray-600 hover:text-blue-600 hover:border-blue-300"
+        onclick="switchTab('notices')"
+      >
+        Notices
+      </button>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div id="dashboardTab" class="tab-content">
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow p-6">
+          <p class="text-gray-600 text-sm font-semibold">Total Complaints</p>
+          <p id="totalComplaints" class="text-3xl font-bold text-blue-600 mt-2">0</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+          <p class="text-gray-600 text-sm font-semibold">Open</p>
+          <p id="openComplaints" class="text-3xl font-bold text-orange-600 mt-2">0</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+          <p class="text-gray-600 text-sm font-semibold">In Progress</p>
+          <p id="inProgressComplaints" class="text-3xl font-bold text-yellow-600 mt-2">0</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+          <p class="text-gray-600 text-sm font-semibold">Resolved</p>
+          <p id="resolvedComplaints" class="text-3xl font-bold text-green-600 mt-2">0</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+          <p class="text-gray-600 text-sm font-semibold">Overdue</p>
+          <p id="overdueComplaints" class="text-3xl font-bold text-red-600 mt-2">0</p>
+        </div>
+      </div>
+
+      <!-- Recent Complaints -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white rounded-lg shadow p-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">Recent Complaints</h3>
+          <div id="recentComplaints" class="space-y-2"></div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">Top Residents</h3>
+          <div id="topResidents" class="space-y-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Complaints Tab -->
+    <div id="complaintsTab" class="tab-content hidden">
+      <!-- Filters -->
+      <div class="bg-white rounded-lg shadow p-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <select
+            id="filterStatus"
+            onchange="filterComplaints()"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">All Status</option>
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+
+          <select
+            id="filterCategory"
+            onchange="filterComplaints()"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">All Categories</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Cleaning">Cleaning</option>
+            <option value="Noise">Noise</option>
+            <option value="Parking">Parking</option>
+            <option value="Security">Security</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <select
+            id="filterPriority"
+            onchange="filterComplaints()"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">All Priority</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+
+          <label class="flex items-center">
+            <input
+              type="checkbox"
+              id="filterOverdue"
+              onchange="filterComplaints()"
+              class="w-4 h-4 text-blue-600 rounded"
+            />
+            <span class="ml-2 text-gray-700">Overdue Only</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Complaints Table -->
+      <div class="bg-white rounded-lg shadow overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-100 border-b">
+            <tr>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Title</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Category</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Status</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Priority</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Resident</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Date</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="complaintsTableBody" class="divide-y"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Notices Tab -->
+    <div id="noticesTab" class="tab-content hidden">
+      <!-- Create Notice Form -->
+      <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Create New Notice</h2>
+        <form id="noticeForm" class="space-y-4">
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2">Title</label>
+            <input
+              type="text"
+              id="noticeTitle"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Notice title"
+            />
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-semibold mb-2">Message</label>
+            <textarea
+              id="noticeMessage"
+              required
+              rows="4"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Write your notice message"
+            ></textarea>
+          </div>
+
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="noticeImportant"
+              class="w-4 h-4 text-blue-600 rounded"
+            />
+            <label for="noticeImportant" class="ml-2 text-gray-700 font-semibold">
+              Mark as Important (Pin to Top)
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
+          >
+            Create Notice
+          </button>
+        </form>
+      </div>
+
+      <!-- Notices List -->
+      <div id="noticesList" class="space-y-4"></div>
+    </div>
+  </div>
+
+  <!-- Alert Messages -->
+  <div id="alertBox" class="fixed top-4 right-4 max-w-sm z-50"></div>
+
+  <!-- Update Complaint Modal -->
+  <div id="updateComplaintModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
+    <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4">
+      <div class="p-6">
+        <div class="flex justify-between items-start mb-4">
+          <h2 class="text-2xl font-bold text-gray-800">Update Complaint</h2>
+          <button
+            onclick="closeUpdateModal()"
+            class="text-gray-400 hover:text-gray-600 text-2xl"
+          >
+            ×
+          </button>
+        </div>
+
+        <div id="updateFormContent" class="space-y-4"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
